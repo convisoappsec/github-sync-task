@@ -1,9 +1,7 @@
 # Branch association
 
-How `repository-url` and `branch` behave, and why the action is built the way it is. This is the
-GitHub port of the behaviour specified and validated for
-[`azure-sync-task`](https://github.com/convisoappsec/azure-sync-task); the API contract described
-here was verified against the Conviso backend during that work and is unchanged.
+How `repository-url` and `branch` behave, and why the action is built the way it is. The API
+contract described here was verified against the Conviso backend.
 
 ## The contract
 
@@ -69,10 +67,8 @@ regression test for exactly that name in
   ordinary variables are useless as branch names: `GITHUB_REF` is `refs/pull/42/merge` and
   `GITHUB_REF_NAME` is the literal `42/merge`. `GITHUB_BASE_REF` carries the branch the pull
   request is merging into, and is unset on other events, so push runs fall straight through.
-  This mirrors the Azure task's use of `System.PullRequest.TargetBranch`.
-- **The repository URL is assembled from two halves**, unlike Azure's single
-  `Build.Repository.Uri`. Reading `GITHUB_SERVER_URL` rather than hardcoding `https://github.com`
-  is what makes the action work on GitHub Enterprise Server.
+- **The repository URL is assembled from two halves.** Reading `GITHUB_SERVER_URL` rather than
+  hardcoding `https://github.com` is what makes the action work on GitHub Enterprise Server.
 - **Unrecognised refs are passed through untouched** (`refs/tags/v1` stays as it is). The platform
   then records what the workflow actually reported, instead of a branch name the action invented.
 

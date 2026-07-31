@@ -174,14 +174,14 @@ themselves. That is the point of the moving major tag — do not "fix" a breakin
 | Consumers get *"Can't find 'action.yml'"* | The tag they reference predates `action.yml`, or points at a commit where it is missing. |
 | The action runs old behaviour after a release | `dist/` was not rebuilt before tagging. Run `yarn build`, commit, and cut a new patch release; CI's `check-dist` job exists to prevent exactly this. |
 | *"Missing download info for actions/…"* or a Node version error | `runs.using` names a runtime the consumer's runner does not have. This action targets `node24`; a self-hosted runner on an older runner release may need updating. |
-| The step is green but Conviso recorded nothing | The API answered `200` with a GraphQL error — see [Known behaviour](#8-known-behaviour-carried-over-from-the-azure-task). |
+| The step is green but Conviso recorded nothing | The API answered `200` with a GraphQL error — see [Known behaviour](#8-known-behaviour). |
 
 ---
 
-## 8. Known behaviour carried over from the Azure task
+## 8. Known behaviour
 
-Two behaviours are deliberate ports of `azure-sync-task`, not oversights. They are documented
-here so a future change is a decision rather than a surprise:
+Two behaviours are deliberate, not oversights. They are documented here so a future change is a
+decision rather than a surprise:
 
 1. **A GraphQL error does not fail the step.** The action marks success whenever the HTTP call
    does not throw, including when the response body carries `errors` and `data: null` — for

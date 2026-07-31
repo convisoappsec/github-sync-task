@@ -6,8 +6,7 @@ All notable changes to this project are documented here. The format follows
 
 ## [1.0.0] — Unreleased
 
-First release. Ports `convisoappsec/azure-sync-task` 1.2.0 to GitHub Actions with the same
-behaviour and the same API contract.
+First release.
 
 ### Added
 
@@ -18,8 +17,7 @@ behaviour and the same API contract.
   and `GITHUB_BASE_REF`/`GITHUB_REF`), so the common case needs no configuration.
 - A warning when `branch` resolves without `repository-url`, the combination Conviso Platform
   discards without a word.
-- `asset-id` and `asset-name` outputs, exposing the associated Asset to later steps. The Azure
-  task only logged the response.
+- `asset-id` and `asset-name` outputs, exposing the associated Asset to later steps.
 - Masking of the API key through `core.setSecret`, so it appears as `***` in the run log even when
   a workflow passes it literally.
 - CI that typechecks, tests, and fails when the committed `dist/` no longer matches the sources.
@@ -27,11 +25,10 @@ behaviour and the same API contract.
 
 ### Notes
 
-- Input names are lowercase and hyphenated, following GitHub Actions convention. See
-  [Migrating from the Azure task](README.md#migrating-from-the-azure-task) for the mapping.
-- The `Origin` header sent to Conviso is `GitHub Actions Conviso Task`, distinguishing these calls
-  from the Azure task's.
-- Two behaviours are deliberate carry-overs from the Azure task: a GraphQL error in the response
-  body does not fail the step, and branch association depends on a per-company feature flag in
-  Conviso Platform. Both are documented in
-  [docs/publishing-marketplace.md](docs/publishing-marketplace.md#8-known-behaviour-carried-over-from-the-azure-task).
+- Input names are lowercase and hyphenated, following GitHub Actions convention.
+- The `Origin` header sent to Conviso is `GitHub Actions Conviso Task`, identifying which CI the
+  call came from.
+- Two behaviours are deliberate: a GraphQL error in the response body does not fail the step, and
+  branch association depends on a per-company feature flag in Conviso Platform. Both are
+  documented in
+  [docs/publishing-marketplace.md](docs/publishing-marketplace.md#8-known-behaviour).

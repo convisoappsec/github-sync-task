@@ -7,10 +7,6 @@ It triggers a sync to Conviso Platform for a project held by an external scanner
 Checkmarx, Dependency Track, and any other integration Conviso supports), and can record the
 repository and branch the scan came from.
 
-This is the GitHub Actions counterpart of
-[convisoappsec/azure-sync-task](https://github.com/convisoappsec/azure-sync-task); the two speak
-to the same API and behave the same way. See [Migrating from the Azure task](#migrating-from-the-azure-task).
-
 ## Table of Contents
 
 - [Features](#features)
@@ -21,7 +17,6 @@ to the same API and behave the same way. See [Migrating from the Azure task](#mi
     - [Associating a branch](#associating-a-branch)
     - [Pull requests](#pull-requests)
     - [Using the outputs](#using-the-outputs)
-- [Migrating from the Azure task](#migrating-from-the-azure-task)
 - [Prerequisites](#prerequisites)
 - [Project structure](#project-structure)
 - [Development](#development)
@@ -139,7 +134,7 @@ Three things to know before turning this on:
 On `pull_request` and `pull_request_target` events, `GITHUB_REF` is the temporary merge ref
 (`refs/pull/42/merge`) and `GITHUB_REF_NAME` is the literal `42/merge` — neither is a branch name.
 The action uses `GITHUB_BASE_REF` there, which carries the branch the pull request is merging
-into, matching what the Azure task records. No configuration is needed:
+into. No configuration is needed:
 
 ```yaml
 on:
@@ -172,24 +167,6 @@ If you would rather record the branch the pull request came *from*, pass it expl
 
       - run: echo "Associated asset ${{ steps.conviso.outputs.asset-name }} (#${{ steps.conviso.outputs.asset-id }})"
 ```
-
-## Migrating from the Azure task
-
-The behaviour is identical; only the naming and the surrounding YAML change. GitHub Action inputs
-are conventionally lowercase and hyphenated, so the input names differ:
-
-| Azure Pipelines task | This action      | Notes |
-|----------------------|------------------|-------|
-| `API_KEY`            | `api-key`        | Same meaning. |
-| `PROJECT_ID`         | `project-id`     | Same meaning. |
-| `INTEGRATION`        | `integration`    | Same meaning, same GraphQL enum values. |
-| `COMPANY_ID`         | `company-id`     | Same meaning. |
-| `REPOSITORY_URL`     | `repository-url` | Default changes from `Build.Repository.Uri` to `$GITHUB_SERVER_URL/$GITHUB_REPOSITORY`. |
-| `BRANCH`             | `branch`         | Default changes from `System.PullRequest.TargetBranch`/`Build.SourceBranch` to `GITHUB_BASE_REF`/`GITHUB_REF`. |
-| —                    | `asset-id`, `asset-name` | New: the Azure task only logs the response. |
-
-The request sent to Conviso is the same in both, except for the `Origin` header, which identifies
-which CI the call came from (`GitHub Actions Conviso Task` here).
 
 ## Prerequisites
 
@@ -294,9 +271,9 @@ To exercise the action inside a real workflow before releasing it, reference the
 
 ## Publishing
 
-Unlike the Azure DevOps task, a GitHub Action needs no packaging step and no `.vsix`: consumers
-reference the repository at a git ref (`convisoappsec/github-sync-task@v1`). Publishing to the
-Marketplace is about **discoverability** — a release tag is what actually makes a version usable.
+A GitHub Action needs no packaging step: consumers reference the repository at a git ref
+(`convisoappsec/github-sync-task@v1`). Publishing to the Marketplace is about
+**discoverability** — a release tag is what actually makes a version usable.
 
 ### Releasing a version
 
