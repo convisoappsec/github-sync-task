@@ -1,0 +1,18 @@
+.idea/*
+.vscode/*
+node_modules
+
+# Yarn 4 (node-modules linker): keep the config and the lockfile, drop the caches
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Jest / coverage
+coverage
+
+# NOTE: dist/ is deliberately NOT ignored.
+# A JavaScript GitHub Action runs straight from the repository — the runner never
+# installs dependencies — so the bundled dist/index.js must be committed. See
+# docs/publishing-marketplace.md.

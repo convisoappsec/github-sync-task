@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Typecheck and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - run: yarn install --immutable
+
+      - run: yarn typecheck
+
+      - run: yarn test
+
+  check-dist:
+    name: dist/ is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - run: yarn install --immutable
+
+      - run: yarn build
+
+      # The runner executes the committed bundle, never the sources, so a dist/ that
+      # lags behind src/ ships old behaviour to everyone using the action. Catch it here
+      # instead of in someone else's pipeline.
+      - name: Compare the rebuilt bundle with the committed one
+        id: diff
+        run: |
+          if [ -n "$(git status --porcelain dist/)" ]; then
+            echo "dist/ is out of date. Run 'yarn build' and commit the result." >&2
+            git diff --stat -- dist/ >&2
+            exit 1
+          fi
+
+      - name: Upload the rebuilt bundle for inspection
+        if: failure() && steps.diff.outcome == 'failure'
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/

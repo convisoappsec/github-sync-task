@@ -1,0 +1,46 @@
+name: Move the major version tag
+
+# Consumers pin `@v1` so they pick up patches without editing their workflows. That tag
+# is not maintained by GitHub: publishing v1.2.0 leaves `v1` pointing wherever it was, so
+# this moves it forward on every published release.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to point the major version at (e.g. v1.2.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  retag:
+    name: Point v<major> at the release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Move the major tag
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.tag || github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+
+          case "$RELEASE_TAG" in
+            v[0-9]*.[0-9]*.[0-9]*) ;;
+            *) echo "Expected a vMAJOR.MINOR.PATCH tag, got '$RELEASE_TAG'." >&2; exit 1 ;;
+          esac
+
+          MAJOR="${RELEASE_TAG%%.*}"   # v1.2.0 -> v1
+
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+          git tag --force "$MAJOR" "$RELEASE_TAG"
+          git push --force origin "refs/tags/$MAJOR"
+
+          echo "$MAJOR now points at $RELEASE_TAG."

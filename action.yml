@@ -1,0 +1,49 @@
+name: 'Conviso GitHub Sync Task'
+description: 'Triggers a sync to Conviso Platform for a given project of a scanner (e.g.: Fortify, Checkmarx, Dependency Track).'
+author: 'Conviso Application Security'
+
+# Shown on the GitHub Marketplace listing. `icon` must be a Feather icon name and
+# `color` one of: white, yellow, blue, green, orange, red, purple, gray-dark.
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  api-key:
+    description: 'API Key used to authenticate requests to the Conviso GraphQL endpoint. Always pass it from a secret, e.g. ${{ secrets.CONVISO_API_KEY }}.'
+    required: true
+  project-id:
+    description: 'Project ID from the external scanner (e.g., Fortify, Checkmarx, Dependency Track).'
+    required: false
+    default: ''
+  integration:
+    description: "Name of the integration in Conviso's GraphQL schema (e.g., CONVISO_SCANNER, DEPENDENCY_TRACK, FORTIFY, CHECKMARX)."
+    required: true
+  company-id:
+    description: 'Company ID in Conviso Platform.'
+    required: true
+  repository-url:
+    description: >-
+      Repository this scan belongs to (e.g., https://github.com/org/repo). When set, the Asset in
+      Conviso Platform becomes a repository and `branch` below is recorded as one of its branches.
+      Defaults to the workflow's own repository ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY). Note: the
+      Asset is then named after the repository (org/repo) instead of the scanner's project name.
+    required: false
+    default: ''
+  branch:
+    description: >-
+      Branch this scan covers. Only takes effect together with `repository-url` — without it,
+      Conviso Platform ignores the branch. Defaults to the branch that triggered the run (the pull
+      request's target branch on pull_request events).
+    required: false
+    default: ''
+
+outputs:
+  asset-id:
+    description: 'ID of the Asset associated in Conviso Platform, or empty when the API returned none.'
+  asset-name:
+    description: 'Name of the Asset associated in Conviso Platform, or empty when the API returned none.'
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'

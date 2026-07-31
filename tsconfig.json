@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2023",                                  /* The action runs on the runner's Node 24, so nothing needs downlevelling. */
+    "lib": ["es2023"],
+    "types": ["node"],
+
+    /* Modules — esbuild produces the CommonJS bundle the runner loads, so tsc only needs
+       to resolve the same way a bundler does (which includes reading `exports` maps:
+       @actions/core 3.x publishes ESM only and is invisible to the classic resolver). */
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": false,
+
+    /* Emit — nothing. `yarn build` bundles, `yarn typecheck` only checks. */
+    "noEmit": true,
+    "esModuleInterop": true,                             /* Ease importing CommonJS modules such as axios. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "vitest.config.mts"],
+  "exclude": ["node_modules", "dist"]
+}
