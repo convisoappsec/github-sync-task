@@ -1,6 +1,6 @@
 <img src="images/logo.jpeg" alt="Conviso Application Security" width="96" align="right">
 
-# Conviso GitHub Sync Task
+# Sync External Scans with Conviso
 
 A GitHub Action, written in TypeScript, that associates a project with the Conviso GraphQL API.
 It triggers a sync to Conviso Platform for a project held by an external scanner (Fortify,
@@ -9,25 +9,27 @@ repository and branch the scan came from.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Quick start](#quick-start)
-- [Inputs](#inputs)
-- [Outputs](#outputs)
-- [Usage](#usage)
+- [Sync External Scans with Conviso](#sync-external-scans-with-conviso)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Quick start](#quick-start)
+  - [Inputs](#inputs)
+  - [Outputs](#outputs)
+  - [Usage](#usage)
     - [Associating a branch](#associating-a-branch)
     - [Pull requests](#pull-requests)
     - [Using the outputs](#using-the-outputs)
-- [Prerequisites](#prerequisites)
-- [Project structure](#project-structure)
-- [Development](#development)
+  - [Prerequisites](#prerequisites)
+  - [Project structure](#project-structure)
+  - [Development](#development)
     - [Building the bundle](#building-the-bundle)
     - [Running tests](#running-tests)
     - [Trying the action locally](#trying-the-action-locally)
-- [Publishing](#publishing)
+  - [Publishing](#publishing)
     - [Releasing a version](#releasing-a-version)
     - [Publishing to the GitHub Marketplace](#publishing-to-the-github-marketplace)
-- [Contributing](#contributing)
-- [License](#license)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Features
 

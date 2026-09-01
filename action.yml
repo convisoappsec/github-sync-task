@@ -1,4 +1,4 @@
-name: 'Conviso GitHub Sync Task'
+name: 'Sync External Scans with Conviso'
 description: 'Triggers a sync to Conviso Platform for a given project of a scanner (e.g.: Fortify, Checkmarx, Dependency Track).'
 author: 'Conviso Application Security'
 

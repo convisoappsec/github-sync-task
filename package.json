@@ -1,6 +1,6 @@
 {
   "name": "conviso-github-sync-task",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitHub Action that triggers a sync to Conviso Platform for a given project of a scanner (e.g.: Fortify, Checkmarx, Dependency Track).",
   "main": "dist/index.js",
   "license": "MIT",

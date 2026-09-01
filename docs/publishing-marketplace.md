@@ -1,6 +1,6 @@
 # Publishing to the GitHub Marketplace
 
-Everything needed to get **Conviso GitHub Sync Task** listed on the
+Everything needed to get **Sync External Scans with Conviso** listed on the
 [GitHub Marketplace](https://github.com/marketplace?type=actions), and to keep it updated
 afterwards.
 
@@ -52,9 +52,10 @@ in this repository; the rest is account configuration that only a person can do.
 - [ ] **The repository is public.** Private repositories cannot be listed.
 - [ ] **The `name` in `action.yml` is unique across the Marketplace.** GitHub rejects a name that
       another listing already uses, that matches an existing GitHub user or organization, or that
-      collides with a Marketplace category. `Conviso GitHub Sync Task` is specific enough to be
-      safe, but the check happens at publish time — if it fails, change `name` in `action.yml`
-      (the `uses:` reference is the repository path, so renaming does not break consumers).
+      collides with a Marketplace category. `Sync External Scans with Conviso` is specific enough
+      to be safe, but the check happens at publish time — if it fails, change `name` in
+      `action.yml` (the `uses:` reference is the repository path, so renaming does not break
+      consumers).
 - [ ] **Two-factor authentication is enabled** for the account that owns the repository. For
       `convisoappsec`, that means 2FA on the organization; an owner enables it under
       *Organization settings → Authentication security*.
