@@ -192,8 +192,7 @@ decision rather than a surprise:
 
 2. **A branch without a repository is dropped silently by the API.** The action warns
    (`branch was resolved but repository-url is empty…`) but still succeeds, because the API's
-   answer is a `200`. Branch association additionally depends on a per-company feature flag in
-   Conviso Platform; while it is off, the two inputs are accepted and have no effect.
+   answer is a `200`.
 
 ---
 

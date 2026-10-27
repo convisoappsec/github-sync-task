@@ -127,9 +127,6 @@ Three things to know before turning this on:
   succeeds.
 - **The Asset gets renamed.** Once associated with a repository, the Asset in Conviso Platform is
   named after the repository (`org/repo`) rather than the project name reported by the scanner.
-- Branch association also depends on the feature being enabled for your company in Conviso
-  Platform. Until then the action behaves exactly as it would without the two inputs, and sending
-  them is harmless.
 
 ### Pull requests
 

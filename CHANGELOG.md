@@ -10,6 +10,8 @@ All notable changes to this project are documented here. The format follows
 
 - Marketplace display name from **Conviso GitHub Sync Task** to **Sync External Scans with Conviso**.
   Workflows keep using `convisoappsec/github-sync-task@v1`.
+- Branch association no longer depends on a per-company feature flag in Conviso Platform: sending
+  `repository-url` is enough. The docs stop describing the flag.
 
 ## [1.0.0] — 2026-08-10
 

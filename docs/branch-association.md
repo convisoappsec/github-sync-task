@@ -19,19 +19,13 @@ The `associateProject` mutation accepts:
 
 ## The gate that defines everything
 
-`branches` **only takes effect** when both conditions hold:
+`branches` **only takes effect** when `repositoryUrl` is present.
 
-1. `repositoryUrl` is present, **and**
-2. the `asset-branch-model-write` feature flag is enabled for the company.
-
-Two consequences the action is designed around:
-
-- **Sending `branches` without `repositoryUrl` is a silent no-op.** No error, no warning from the
-  API — the value is discarded and the association falls back to the legacy, name-based path. That
-  is why the action warns locally instead of relying on the response, and why `repositoryUrl` and
-  `branch` were introduced together rather than one after the other.
-- **The flag is per company.** With it off, behaviour is identical to not sending the fields at
-  all. The change is backward-compatible by construction.
+The consequence the action is designed around: **sending `branches` without `repositoryUrl` is a
+silent no-op.** No error, no warning from the API — the value is discarded and the association
+falls back to the legacy, name-based path. That is why the action warns locally instead of relying
+on the response, and why `repositoryUrl` and `branch` were introduced together rather than one
+after the other.
 
 When the gate passes, the backend identifies the Asset by repository rather than by name, creates
 a `Branch` per declared branch, and stamps a separate `ImportedScan` per branch. An older scan
